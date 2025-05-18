@@ -50,7 +50,12 @@ const Dictionary = () => {
               Explore nossa coleção de termos jurídicos com definições claras e exemplos práticos.
             </p>
             <div className="mb-10">
-              <SearchBar onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+              <SearchBar 
+                onSearch={handleSearch} 
+                searchTerm={searchTerm} 
+                setSearchTerm={setSearchTerm}
+                filteredTerms={filteredTerms} 
+              />
             </div>
           </div>
           
