@@ -35,7 +35,7 @@ const TermDetail = ({ term }: TermDetailProps) => {
           )}
           
           {term.area_direito && (
-            <div className="pt-4 border-t border-gray-800">
+            <div className="pt-4 border-t border-gray-800 flex justify-end">
               <p className="text-netflix-red text-sm">
                 #{term.area_direito.replace(/\s+/g, '')}
               </p>

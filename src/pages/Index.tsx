@@ -1,12 +1,26 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import { ArrowRight } from "lucide-react";
-import legalTerms from "@/data/legalTerms";
+import { useLegalTerms } from "@/hooks/use-legal-terms";
 import TermCard from "@/components/TermCard";
+import { useEffect, useState } from "react";
+import { LegalTermProps } from "@/components/TermCard";
+
 const Index = () => {
-  // Get 3 random terms for featured section
-  const featuredTerms = [...legalTerms].sort(() => 0.5 - Math.random()).slice(0, 3);
+  const { terms, loading } = useLegalTerms();
+  const [featuredTerms, setFeaturedTerms] = useState<LegalTermProps[]>([]);
+  
+  // Generate random featured terms when the component mounts or terms change
+  useEffect(() => {
+    if (terms && terms.length > 0) {
+      // Get 3 random terms for featured section
+      const shuffled = [...terms].sort(() => 0.5 - Math.random());
+      setFeaturedTerms(shuffled.slice(0, 3));
+    }
+  }, [terms]);
+
   return <div className="min-h-screen flex flex-col">
       <Navbar />
       
@@ -34,7 +48,14 @@ const Index = () => {
               Termos em Destaque
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {featuredTerms.map(term => <TermCard key={term.id} term={term} className="h-full" />)}
+              {loading ? (
+                <div className="col-span-3 flex justify-center items-center py-8">
+                  <div className="animate-spin h-8 w-8 border-t-2 border-netflix-red rounded-full mr-2"></div>
+                  <p className="text-netflix-light">Carregando termos...</p>
+                </div>
+              ) : (
+                featuredTerms.map(term => <TermCard key={term.id} term={term} className="h-full" />)
+              )}
             </div>
             <div className="text-center mt-8">
               <Link to="/dictionary">

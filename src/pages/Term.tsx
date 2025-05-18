@@ -20,6 +20,12 @@ const Term = () => {
     async function fetchTerm() {
       if (id) {
         try {
+          // Check if id is a valid UUID format
+          const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+          if (!uuidRegex.test(id)) {
+            throw new Error("Invalid UUID format");
+          }
+          
           const { data, error } = await supabase
             .from("dicionario_juridico")
             .select("id, termo, definicao, exemplo_uso, area_direito")
@@ -39,7 +45,7 @@ const Term = () => {
         } catch (err) {
           const errorMessage = err instanceof Error ? err.message : "Failed to fetch term details";
           toast({
-            title: "Error",
+            title: "Erro",
             description: errorMessage,
             variant: "destructive"
           });
