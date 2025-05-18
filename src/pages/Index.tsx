@@ -1,28 +1,20 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import { ArrowRight } from "lucide-react";
 import legalTerms from "@/data/legalTerms";
 import TermCard from "@/components/TermCard";
-
 const Index = () => {
   // Get 3 random terms for featured section
-  const featuredTerms = [...legalTerms]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  const featuredTerms = [...legalTerms].sort(() => 0.5 - Math.random()).slice(0, 3);
+  return <div className="min-h-screen flex flex-col">
       <Navbar />
       
       <div className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 flex-grow">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16 animate-fade-up">
-            <h1 className="text-4xl md:text-6xl font-bold text-netflix-red mb-6 text-shadow">
-              JusLex
-            </h1>
+            <h1 className="text-4xl md:text-6xl font-bold text-netflix-red mb-6 text-shadow">Dicionário Jurídico</h1>
             <p className="text-xl md:text-2xl text-netflix-light mb-8 max-w-3xl mx-auto">
               Seu dicionário jurídico digital para entender termos e conceitos legais de forma simples e objetiva.
             </p>
@@ -42,9 +34,7 @@ const Index = () => {
               Termos em Destaque
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {featuredTerms.map((term) => (
-                <TermCard key={term.id} term={term} className="h-full" />
-              ))}
+              {featuredTerms.map(term => <TermCard key={term.id} term={term} className="h-full" />)}
             </div>
             <div className="text-center mt-8">
               <Link to="/dictionary">
@@ -58,12 +48,8 @@ const Index = () => {
           
           {/* About Section */}
           <div className="bg-netflix-card p-6 md:p-10 rounded-lg max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-netflix-red mb-4">
-              Sobre o JusLex
-            </h2>
-            <p className="text-netflix-light mb-4">
-              O JusLex é um dicionário jurídico digital que visa facilitar o entendimento de termos e conceitos legais para estudantes, profissionais e qualquer pessoa interessada em compreender melhor a linguagem jurídica.
-            </p>
+            <h2 className="text-2xl font-bold text-netflix-red mb-4">Sobre o Dicionário Jurídico</h2>
+            <p className="text-netflix-light mb-4">O Dicionário Jurídico digital visa facilitar o entendimento de termos e conceitos legais para estudantes, profissionais e qualquer pessoa interessada em compreender melhor a linguagem jurídica.</p>
             <p className="text-netflix-light">
               Nosso objetivo é tornar o conhecimento jurídico mais acessível através de definições claras e exemplos práticos de aplicação dos termos no dia a dia jurídico.
             </p>
@@ -77,8 +63,6 @@ const Index = () => {
           <p className="text-netflix-text">© 2025 JusLex - Dicionário Jurídico</p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
