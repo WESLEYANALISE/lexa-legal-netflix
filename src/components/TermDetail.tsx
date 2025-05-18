@@ -20,17 +20,24 @@ const TermDetail = ({ term }: TermDetailProps) => {
       </Link>
       <Card className="bg-netflix-card border-none shadow-lg">
         <CardHeader>
-          <CardTitle className="text-netflix-red text-2xl md:text-3xl">{term.term}</CardTitle>
+          <CardTitle className="text-netflix-red text-2xl md:text-3xl">{term.termo}</CardTitle>
+          {term.area_direito && (
+            <div className="inline-block bg-netflix-red/20 text-netflix-red text-xs px-2 py-1 rounded-full mt-2">
+              {term.area_direito}
+            </div>
+          )}
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-lg font-medium text-netflix-light mb-2">Definição</h3>
-            <p className="text-netflix-light">{term.definition}</p>
+            <p className="text-netflix-light">{term.definicao}</p>
           </div>
-          <div>
-            <h3 className="text-lg font-medium text-netflix-light mb-2">Exemplo</h3>
-            <p className="text-netflix-light italic border-l-2 border-netflix-red pl-4">{term.example}</p>
-          </div>
+          {term.exemplo_uso && (
+            <div>
+              <h3 className="text-lg font-medium text-netflix-light mb-2">Exemplo</h3>
+              <p className="text-netflix-light italic border-l-2 border-netflix-red pl-4">{term.exemplo_uso}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

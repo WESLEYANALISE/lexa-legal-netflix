@@ -3,25 +3,54 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import TermDetail from "@/components/TermDetail";
-import legalTerms from "@/data/legalTerms";
-import type { LegalTermProps } from "@/components/TermCard";
+import { LegalTermProps } from "@/components/TermCard";
+import { supabase } from "@/integrations/supabase/client";
+import MobileNav from "@/components/MobileNav";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "@/components/ui/use-toast";
 
 const Term = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [term, setTerm] = useState<LegalTermProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (id) {
-      const foundTerm = legalTerms.find(term => term.id === id);
-      if (foundTerm) {
-        setTerm(foundTerm);
-      } else {
-        navigate("/dictionary", { replace: true });
+    async function fetchTerm() {
+      if (id) {
+        try {
+          const { data, error } = await supabase
+            .from("dicionario_juridico")
+            .select("id, termo, definicao, exemplo_uso, area_direito")
+            .eq("id", id)
+            .single();
+
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          if (!data) {
+            navigate("/dictionary", { replace: true });
+            return;
+          }
+
+          setTerm(data);
+        } catch (err) {
+          const errorMessage = err instanceof Error ? err.message : "Failed to fetch term details";
+          toast({
+            title: "Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+          navigate("/dictionary", { replace: true });
+        } finally {
+          setLoading(false);
+        }
       }
     }
-    setLoading(false);
+
+    fetchTerm();
   }, [id, navigate]);
 
   if (loading) {
@@ -29,8 +58,10 @@ const Term = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
-          <div className="animate-pulse text-netflix-red text-xl">Carregando...</div>
+          <div className="animate-spin h-8 w-8 border-t-2 border-netflix-red rounded-full mr-2"></div>
+          <div className="text-netflix-red text-xl">Carregando...</div>
         </div>
+        {isMobile && <MobileNav />}
       </div>
     );
   }
@@ -46,6 +77,8 @@ const Term = () => {
       <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow">
         <TermDetail term={term} />
       </div>
+      
+      {isMobile && <MobileNav />}
       
       {/* Footer */}
       <footer className="bg-netflix-black py-6">

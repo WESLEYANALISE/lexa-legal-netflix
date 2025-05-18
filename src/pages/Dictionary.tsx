@@ -3,32 +3,38 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import TermCard from "@/components/TermCard";
-import legalTerms from "@/data/legalTerms";
+import { useLegalTerms } from "@/hooks/use-legal-terms";
 import { Search } from "lucide-react";
+import MobileNav from "@/components/MobileNav";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Dictionary = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredTerms, setFilteredTerms] = useState(legalTerms);
+  const { terms, loading, error } = useLegalTerms();
+  const [filteredTerms, setFilteredTerms] = useState(terms);
+  const isMobile = useIsMobile();
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
 
   useEffect(() => {
-    if (searchTerm) {
-      const normalizedSearchTerm = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const filtered = legalTerms.filter((term) => {
-        const normalizedTerm = term.term.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const normalizedDefinition = term.definition.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        
-        return normalizedTerm.includes(normalizedSearchTerm) || 
-               normalizedDefinition.includes(normalizedSearchTerm);
-      });
-      setFilteredTerms(filtered);
-    } else {
-      setFilteredTerms(legalTerms);
+    if (terms?.length > 0) {
+      if (searchTerm) {
+        const normalizedSearchTerm = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const filtered = terms.filter((term) => {
+          const normalizedTerm = term.termo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          const normalizedDefinition = term.definicao.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          
+          return normalizedTerm.includes(normalizedSearchTerm) || 
+                normalizedDefinition.includes(normalizedSearchTerm);
+        });
+        setFilteredTerms(filtered);
+      } else {
+        setFilteredTerms(terms);
+      }
     }
-  }, [searchTerm]);
+  }, [searchTerm, terms]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -48,7 +54,17 @@ const Dictionary = () => {
             </div>
           </div>
           
-          {filteredTerms.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin h-8 w-8 mx-auto border-t-2 border-netflix-red rounded-full mb-4"></div>
+              <p className="text-netflix-light">Carregando termos jurídicos...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-500 mb-2">Erro ao carregar os termos jurídicos</p>
+              <p className="text-netflix-text">{error}</p>
+            </div>
+          ) : filteredTerms.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
               {filteredTerms.map((term) => (
                 <TermCard key={term.id} term={term} />
@@ -65,6 +81,8 @@ const Dictionary = () => {
           )}
         </div>
       </div>
+      
+      {isMobile && <MobileNav />}
       
       {/* Footer */}
       <footer className="bg-netflix-black py-6">
