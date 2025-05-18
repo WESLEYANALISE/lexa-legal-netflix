@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -13,16 +12,11 @@ const SearchBar = ({ onSearch, searchTerm, setSearchTerm }: SearchBarProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
-    onSearch(value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(searchTerm);
+    onSearch(value); // Call onSearch immediately as user types
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto relative">
+    <form className="w-full max-w-2xl mx-auto relative">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-netflix-text" />
         <Input
