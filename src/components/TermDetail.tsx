@@ -21,11 +21,6 @@ const TermDetail = ({ term }: TermDetailProps) => {
       <Card className="bg-netflix-card border-none shadow-lg">
         <CardHeader>
           <CardTitle className="text-netflix-red text-2xl md:text-3xl">{term.termo}</CardTitle>
-          {term.area_direito && (
-            <div className="inline-block bg-netflix-red/20 text-netflix-red text-xs px-2 py-1 rounded-full mt-2">
-              {term.area_direito}
-            </div>
-          )}
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
@@ -36,6 +31,14 @@ const TermDetail = ({ term }: TermDetailProps) => {
             <div>
               <h3 className="text-lg font-medium text-netflix-light mb-2">Exemplo</h3>
               <p className="text-netflix-light italic border-l-2 border-netflix-red pl-4">{term.exemplo_uso}</p>
+            </div>
+          )}
+          
+          {term.area_direito && (
+            <div className="pt-4 border-t border-gray-800">
+              <p className="text-netflix-red text-sm">
+                #{term.area_direito.replace(/\s+/g, '')}
+              </p>
             </div>
           )}
         </CardContent>

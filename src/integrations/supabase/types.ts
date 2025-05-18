@@ -3005,6 +3005,62 @@ export type Database = {
         }
         Relationships: []
       }
+      mindmap_areas: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      mindmap_topics: {
+        Row: {
+          area_id: string | null
+          created_at: string
+          description: string | null
+          drive_link: string
+          id: string
+          title: string
+        }
+        Insert: {
+          area_id?: string | null
+          created_at?: string
+          description?: string | null
+          drive_link: string
+          id?: string
+          title: string
+        }
+        Update: {
+          area_id?: string | null
+          created_at?: string
+          description?: string | null
+          drive_link?: string
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mindmap_topics_area_id_fkey"
+            columns: ["area_id"]
+            isOneToOne: false
+            referencedRelation: "mindmap_areas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       modelos_peticoes: {
         Row: {
           area: string | null
