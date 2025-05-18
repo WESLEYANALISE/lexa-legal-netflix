@@ -38,9 +38,10 @@ const Dictionary = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {isMobile && <MobileNav />}
       <Navbar />
       
-      <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow">
+      <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow mt-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 animate-fade-up">
             <h1 className="text-3xl md:text-4xl font-bold text-netflix-red mb-6">
@@ -50,7 +51,7 @@ const Dictionary = () => {
               Explore nossa coleção de termos jurídicos com definições claras e exemplos práticos.
             </p>
             <div className="mb-10">
-              <SearchBar onSearch={handleSearch} />
+              <SearchBar onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
           </div>
           
@@ -74,17 +75,18 @@ const Dictionary = () => {
             <div className="text-center py-12">
               <Search className="mx-auto h-12 w-12 text-netflix-text mb-4" />
               <h2 className="text-xl font-medium text-netflix-light mb-2">Nenhum resultado encontrado</h2>
-              <p className="text-netflix-text">
+              <p className="text-netflix-text mb-4">
                 Tente buscar por outro termo ou verifique a ortografia.
+              </p>
+              <p className="text-netflix-text">
+                Não encontrou o que procurava? Experimente nossa{' '}
+                <a href="/search" className="text-netflix-red hover:underline">Busca com IA</a>.
               </p>
             </div>
           )}
         </div>
       </div>
       
-      {isMobile && <MobileNav />}
-      
-      {/* Footer */}
       <footer className="bg-netflix-black py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-netflix-text">© 2025 JusLex - Dicionário Jurídico</p>

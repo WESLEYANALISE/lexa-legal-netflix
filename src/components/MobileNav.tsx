@@ -1,5 +1,5 @@
 
-import { Home, Search, Book } from "lucide-react";
+import { Home, Search, Book, List } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-netflix-black border-t border-gray-800 py-2 px-4 md:hidden">
+    <div className="fixed top-0 left-0 right-0 bg-netflix-black border-b border-gray-800 py-2 px-4 z-10">
       <div className="flex justify-around items-center">
         <Link 
           to="/" 
@@ -43,7 +43,18 @@ const MobileNav = () => {
           )}
         >
           <Search size={20} />
-          <span className="text-xs mt-1">Buscar</span>
+          <span className="text-xs mt-1">Buscar IA</span>
+        </Link>
+
+        <Link 
+          to="/list" 
+          className={cn(
+            "flex flex-col items-center p-2", 
+            isActive("/list") ? "text-netflix-red" : "text-netflix-text"
+          )}
+        >
+          <List size={20} />
+          <span className="text-xs mt-1">Lista A-Z</span>
         </Link>
       </div>
     </div>

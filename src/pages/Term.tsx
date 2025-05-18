@@ -56,12 +56,12 @@ const Term = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
+        {isMobile && <MobileNav />}
         <Navbar />
-        <div className="flex-grow flex items-center justify-center">
+        <div className="flex-grow flex items-center justify-center mt-16">
           <div className="animate-spin h-8 w-8 border-t-2 border-netflix-red rounded-full mr-2"></div>
           <div className="text-netflix-red text-xl">Carregando...</div>
         </div>
-        {isMobile && <MobileNav />}
       </div>
     );
   }
@@ -72,15 +72,13 @@ const Term = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {isMobile && <MobileNav />}
       <Navbar />
       
-      <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow">
+      <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow mt-16">
         <TermDetail term={term} />
       </div>
       
-      {isMobile && <MobileNav />}
-      
-      {/* Footer */}
       <footer className="bg-netflix-black py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-netflix-text">© 2025 JusLex - Dicionário Jurídico</p>

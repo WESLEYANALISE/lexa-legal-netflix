@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Dictionary from "./pages/Dictionary";
 import Term from "./pages/Term";
 import NotFound from "./pages/NotFound";
+import AISearch from "./pages/AISearch";
+import AlphabeticalList from "./pages/AlphabeticalList";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/dictionary" element={<Dictionary />} />
           <Route path="/term/:id" element={<Term />} />
+          <Route path="/search" element={<AISearch />} />
+          <Route path="/list" element={<AlphabeticalList />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
