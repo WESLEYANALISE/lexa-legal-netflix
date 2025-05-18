@@ -11,7 +11,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-netflix-black border-b border-gray-800 py-2 px-4 z-10">
+    <div className="fixed top-0 left-0 right-0 bg-netflix-black border-b border-gray-800 py-2 px-4 z-50">
       <div className="flex justify-around items-center">
         <Link 
           to="/" 

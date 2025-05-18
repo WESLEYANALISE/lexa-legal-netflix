@@ -38,8 +38,7 @@ const Dictionary = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {isMobile && <MobileNav />}
-      <Navbar />
+      {isMobile ? <MobileNav /> : <Navbar />}
       
       <div className="py-12 px-4 sm:px-6 lg:px-8 flex-grow mt-16">
         <div className="max-w-7xl mx-auto">
